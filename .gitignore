@@ -1,0 +1,45 @@
+# Build outputs
+/bin/
+/obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.vs/
+*.vscode/
+
+# Rider / JetBrains IDE
+.idea/
+
+# Visual Studio Code settings
+.vscode/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Backup files
+*.bak
+*.old
+
+# Launch settings (opcional: se tiver secrets ou paths locais)
+Properties/launchSettings.json
+
+# Mac Catalyst / iOS / Android intermediate files
+obj/
+bin/
+*.app
+*.apk
+*.aab
+*.ipa
