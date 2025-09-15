@@ -17,46 +17,93 @@ public class HomeView : ContentPage
         Controller = new HomeController();
         BackgroundColor = Color.FromArgb("#0D0D0D");
 
+        // Logo
         var logo = new Image
         {
             Source = "investyou.png",
-            HorizontalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Start,
             HeightRequest = 100
         };
 
+        // Botão Logout no canto superior direito
+        var logoutButton = new Button
+        {
+            Text = "Logout",
+            BackgroundColor = Color.FromArgb("#1E1E1E"),
+            TextColor = Color.FromArgb("#FFCE00"),
+            CornerRadius = 8,
+            BorderColor = Color.FromArgb("#FFCE00"),
+            BorderWidth = 2,
+            WidthRequest = 100,
+            HeightRequest = 40,
+            HorizontalOptions = LayoutOptions.End,
+            VerticalOptions = LayoutOptions.Center
+        };
+        logoutButton.Clicked += (s, e) =>
+        {
+            Application.Current.MainPage = new LoginView();
+        };
+
+        // Topo da página com logo à esquerda e logout à direita
+        var topLayout = new Grid
+        {
+            ColumnDefinitions =
+            {
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                new ColumnDefinition { Width = new GridLength(120) } // espaço para botão
+            },
+            Padding = new Thickness(0, 10, 0, 20)
+        };
+        topLayout.Add(logo, 0, 0);
+        topLayout.Add(logoutButton, 1, 0);
+
+        // Editor grande tipo textarea
         PromptEditor = new Editor
         {
             Placeholder = "Digite o prompt...",
             PlaceholderColor = Colors.Gray,
             TextColor = Colors.White,
-            BackgroundColor = Color.FromArgb("#1E1E1E")
+            BackgroundColor = Color.FromArgb("#1E1E1E"),
+            HeightRequest = 150,
+            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400,
+            HorizontalOptions = LayoutOptions.Center
         };
 
+        // Slider de temperatura
         TemperatureSlider = new Slider(0, 1, 0.5)
         {
             ThumbColor = Color.FromArgb("#FFCE00"),
             MinimumTrackColor = Color.FromArgb("#FFCE00"),
-            MaximumTrackColor = Colors.Gray
+            MaximumTrackColor = Colors.Gray,
+            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400,
+            HorizontalOptions = LayoutOptions.Center
         };
 
+        // Entrada de Max Tokens
         MaxTokensEntry = new Entry
         {
             Placeholder = "Max Tokens",
             Keyboard = Keyboard.Numeric,
             PlaceholderColor = Colors.Gray,
             TextColor = Colors.White,
-            BackgroundColor = Color.FromArgb("#1E1E1E")
+            BackgroundColor = Color.FromArgb("#1E1E1E"),
+            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400,
+            HorizontalOptions = LayoutOptions.Center
         };
 
+        // Botão Salvar
         var saveButton = new Button
         {
             Text = "Salvar",
             BackgroundColor = Color.FromArgb("#FFCE00"),
             TextColor = Colors.Black,
-            CornerRadius = 8
+            CornerRadius = 8,
+            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400,
+            HorizontalOptions = LayoutOptions.Center
         };
         saveButton.Clicked += OnSaveClickedAsync;
 
+        // Label de sucesso
         SuccessLabel = new Label
         {
             TextColor = Color.FromArgb("#0DFF00"),
@@ -64,15 +111,17 @@ public class HomeView : ContentPage
             HorizontalOptions = LayoutOptions.Center
         };
 
+        // Layout principal
         Content = new ScrollView
         {
             Content = new VerticalStackLayout
             {
                 Padding = 20,
                 Spacing = 15,
+                HorizontalOptions = LayoutOptions.Center,
                 Children =
                 {
-                    logo,
+                    topLayout,
                     new Label { Text = "Prompt:", TextColor = Colors.White },
                     PromptEditor,
                     new Label { Text = "Temperatura:", TextColor = Colors.White },
@@ -84,6 +133,21 @@ public class HomeView : ContentPage
                 }
             }
         };
+
+        // Impede redimensionamento da janela (Windows)
+        #if WINDOWS
+        this.HandlerChanged += (s, e) =>
+        {
+            var window = this.Handler.PlatformView as Microsoft.UI.Xaml.Window;
+            if (window != null)
+            {
+                window.MinWidth = 600;
+                window.MinHeight = 600;
+                window.MaxWidth = 600;
+                window.MaxHeight = 800;
+            }
+        };
+        #endif
     }
 
     protected override async void OnAppearing()
