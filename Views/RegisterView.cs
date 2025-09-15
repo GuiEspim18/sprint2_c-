@@ -30,7 +30,8 @@ public class RegisterView : ContentPage
             PlaceholderColor = Colors.Gray,
             TextColor = Colors.White,
             BackgroundColor = Color.FromArgb("#1E1E1E"),
-            Margin = new Thickness(0,5)
+            Margin = new Thickness(0, 5),
+            WidthRequest = 400
         };
 
         EmailEntry = new Entry
@@ -39,7 +40,8 @@ public class RegisterView : ContentPage
             PlaceholderColor = Colors.Gray,
             TextColor = Colors.White,
             BackgroundColor = Color.FromArgb("#1E1E1E"),
-            Margin = new Thickness(0,5)
+            Margin = new Thickness(0, 5),
+            WidthRequest = 400
         };
 
         PasswordEntry = new Entry
@@ -49,7 +51,8 @@ public class RegisterView : ContentPage
             PlaceholderColor = Colors.Gray,
             TextColor = Colors.White,
             BackgroundColor = Color.FromArgb("#1E1E1E"),
-            Margin = new Thickness(0,5)
+            Margin = new Thickness(0, 5),
+            WidthRequest = 400
         };
 
         var registerButton = new Button
@@ -57,7 +60,8 @@ public class RegisterView : ContentPage
             Text = "Registrar",
             BackgroundColor = Color.FromArgb("#FFCE00"),
             TextColor = Colors.Black,
-            CornerRadius = 8
+            CornerRadius = 8,
+            WidthRequest = 400
         };
 
         var loginButton = new Button
@@ -67,7 +71,8 @@ public class RegisterView : ContentPage
             TextColor = Color.FromArgb("#FFCE00"),
             CornerRadius = 8,
             BorderColor = Color.FromArgb("#FFCE00"),
-            BorderWidth = 2
+            BorderWidth = 2,
+            WidthRequest = 400
         };
 
         ErrorLabel = new Label

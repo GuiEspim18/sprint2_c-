@@ -29,7 +29,7 @@ public class LoginView : ContentPage
             TextColor = Colors.White,
             BackgroundColor = Color.FromArgb("#1E1E1E"),
             HorizontalOptions = LayoutOptions.Center,
-            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400,
+            WidthRequest = 400,
             Margin = new Thickness(0,5)
         };
 
@@ -41,7 +41,7 @@ public class LoginView : ContentPage
             TextColor = Colors.White,
             BackgroundColor = Color.FromArgb("#1E1E1E"),
             HorizontalOptions = LayoutOptions.Center,
-            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400,
+            WidthRequest = 400,
             Margin = new Thickness(0,5)
         };
 
@@ -52,7 +52,7 @@ public class LoginView : ContentPage
             TextColor = Colors.Black,
             CornerRadius = 8,
             HorizontalOptions = LayoutOptions.Center,
-            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400
+            WidthRequest = 400
         };
 
         var registerButton = new Button
@@ -64,7 +64,7 @@ public class LoginView : ContentPage
             BorderColor = Color.FromArgb("#FFCE00"),
             BorderWidth = 2,
             HorizontalOptions = LayoutOptions.Center,
-            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400
+            WidthRequest = 400
         };
 
         ErrorLabel = new Label
