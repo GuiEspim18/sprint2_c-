@@ -4,13 +4,18 @@ using InvestYOU.Models;
 
 namespace InvestYOU.Views;
 
+/// <summary>
+/// Tela principal após login, permitindo a gestão da IA.
+/// Contém campos para prompt (editor tipo textarea), slider de temperatura e max tokens.
+/// Possui botão de logout que retorna à LoginView.
+/// </summary>
 public class HomeView : ContentPage
 {
-    private readonly Editor PromptEditor;
-    private readonly Slider TemperatureSlider;
-    private readonly Entry MaxTokensEntry;
-    private readonly HomeController Controller;
-    private readonly Label SuccessLabel;
+    private readonly Editor PromptEditor;       // Campo para digitar prompt
+    private readonly Slider TemperatureSlider;  // Slider de temperatura
+    private readonly Entry MaxTokensEntry;      // Entrada de max tokens
+    private readonly HomeController Controller; // Controller para salvar e carregar dados
+    private readonly Label SuccessLabel;        // Label para mostrar sucesso ao salvar
 
     public HomeView()
     {
@@ -25,7 +30,7 @@ public class HomeView : ContentPage
             HeightRequest = 100
         };
 
-        // Botão Logout no canto superior direito
+        // Botão Logout
         var logoutButton = new Button
         {
             Text = "Logout",
@@ -44,20 +49,20 @@ public class HomeView : ContentPage
             Application.Current.MainPage = new LoginView();
         };
 
-        // Topo da página com logo à esquerda e logout à direita
+        // Top layout com logo e logout
         var topLayout = new Grid
         {
             ColumnDefinitions =
             {
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-                new ColumnDefinition { Width = new GridLength(120) } // espaço para botão
+                new ColumnDefinition { Width = new GridLength(120) }
             },
-            Padding = new Thickness(0, 10, 0, 20)
+            Padding = new Thickness(0,10,0,20)
         };
         topLayout.Add(logo, 0, 0);
         topLayout.Add(logoutButton, 1, 0);
 
-        // Editor grande tipo textarea
+        // Editor grande tipo textarea para prompt
         PromptEditor = new Editor
         {
             Placeholder = "Digite o prompt...",
@@ -65,7 +70,7 @@ public class HomeView : ContentPage
             TextColor = Colors.White,
             BackgroundColor = Color.FromArgb("#1E1E1E"),
             HeightRequest = 150,
-            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400,
+            WidthRequest = 800,
             HorizontalOptions = LayoutOptions.Center
         };
 
@@ -75,7 +80,7 @@ public class HomeView : ContentPage
             ThumbColor = Color.FromArgb("#FFCE00"),
             MinimumTrackColor = Color.FromArgb("#FFCE00"),
             MaximumTrackColor = Colors.Gray,
-            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400,
+            WidthRequest = 800,
             HorizontalOptions = LayoutOptions.Center
         };
 
@@ -87,7 +92,7 @@ public class HomeView : ContentPage
             PlaceholderColor = Colors.Gray,
             TextColor = Colors.White,
             BackgroundColor = Color.FromArgb("#1E1E1E"),
-            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400,
+            WidthRequest = 800,
             HorizontalOptions = LayoutOptions.Center
         };
 
@@ -98,7 +103,7 @@ public class HomeView : ContentPage
             BackgroundColor = Color.FromArgb("#FFCE00"),
             TextColor = Colors.Black,
             CornerRadius = 8,
-            WidthRequest = Application.Current.MainPage?.Width * 0.8 ?? 400,
+            WidthRequest = 800,
             HorizontalOptions = LayoutOptions.Center
         };
         saveButton.Clicked += OnSaveClickedAsync;
@@ -111,7 +116,7 @@ public class HomeView : ContentPage
             HorizontalOptions = LayoutOptions.Center
         };
 
-        // Layout principal
+        // Layout principal da página
         Content = new ScrollView
         {
             Content = new VerticalStackLayout
@@ -134,7 +139,7 @@ public class HomeView : ContentPage
             }
         };
 
-        // Impede redimensionamento da janela (Windows)
+        // Impede redimensionamento da janela no Windows
         #if WINDOWS
         this.HandlerChanged += (s, e) =>
         {
@@ -150,6 +155,9 @@ public class HomeView : ContentPage
         #endif
     }
 
+    /// <summary>
+    /// Carrega os dados da IA ao abrir a tela
+    /// </summary>
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -159,6 +167,9 @@ public class HomeView : ContentPage
         MaxTokensEntry.Text = data.MaxTokens.ToString();
     }
 
+    /// <summary>
+    /// Salva os dados do prompt, temperatura e max tokens
+    /// </summary>
     private async void OnSaveClickedAsync(object sender, EventArgs e)
     {
         var data = new IAData

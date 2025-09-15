@@ -3,18 +3,24 @@ using InvestYOU.Controllers;
 
 namespace InvestYOU.Views;
 
+/// <summary>
+/// Tela de login do aplicativo.
+/// Permite que o usuário insira email e senha para autenticação.
+/// Possui botões para login e para navegar para a tela de registro.
+/// </summary>
 public class LoginView : ContentPage
 {
-    private readonly Entry EmailEntry;
-    private readonly Entry PasswordEntry;
-    private readonly Label ErrorLabel;
-    private readonly AuthController Controller;
+    private readonly Entry EmailEntry;       // Campo de entrada do email
+    private readonly Entry PasswordEntry;    // Campo de entrada da senha
+    private readonly Label ErrorLabel;       // Label para exibir erros de login
+    private readonly AuthController Controller; // Controller responsável pelo login
 
     public LoginView()
     {
         Controller = new AuthController();
-        BackgroundColor = Color.FromArgb("#0D0D0D");
+        BackgroundColor = Color.FromArgb("#0D0D0D"); // Cor de fundo escura
 
+        // Logo do aplicativo
         var logo = new Image
         {
             Source = "investyou.png",
@@ -22,6 +28,7 @@ public class LoginView : ContentPage
             HeightRequest = 120
         };
 
+        // Campo de email
         EmailEntry = new Entry
         {
             Placeholder = "Email",
@@ -33,6 +40,7 @@ public class LoginView : ContentPage
             Margin = new Thickness(0,5)
         };
 
+        // Campo de senha
         PasswordEntry = new Entry
         {
             Placeholder = "Senha",
@@ -45,6 +53,7 @@ public class LoginView : ContentPage
             Margin = new Thickness(0,5)
         };
 
+        // Botão de login
         var loginButton = new Button
         {
             Text = "Login",
@@ -55,6 +64,7 @@ public class LoginView : ContentPage
             WidthRequest = 400
         };
 
+        // Botão de registro
         var registerButton = new Button
         {
             Text = "Registrar",
@@ -67,16 +77,19 @@ public class LoginView : ContentPage
             WidthRequest = 400
         };
 
+        // Label de erro
         ErrorLabel = new Label
         {
-            TextColor = Color.FromArgb("#F95555"),
+            TextColor = Color.FromArgb("#F95555"), // vermelho para erros
             IsVisible = false,
             HorizontalOptions = LayoutOptions.Center
         };
 
+        // Eventos de clique
         loginButton.Clicked += OnLoginButtonClickedAsync;
         registerButton.Clicked += OnRegisterButtonClicked;
 
+        // Layout principal da tela
         Content = new ScrollView
         {
             Content = new VerticalStackLayout
@@ -88,7 +101,7 @@ public class LoginView : ContentPage
             }
         };
 
-        // Impede redimensionamento da janela (Windows)
+        // Impede redimensionamento da janela no Windows
         #if WINDOWS
         this.HandlerChanged += (s, e) =>
         {
@@ -104,6 +117,9 @@ public class LoginView : ContentPage
         #endif
     }
 
+    /// <summary>
+    /// Evento acionado ao clicar em Login
+    /// </summary>
     private async void OnLoginButtonClickedAsync(object sender, EventArgs e)
     {
         var email = EmailEntry.Text;
@@ -111,6 +127,7 @@ public class LoginView : ContentPage
 
         if (await Controller.LoginAsync(email, password))
         {
+            // Ao logar com sucesso, navega para a HomeView
             Controller.OnLoginSuccess(() =>
             {
                 Application.Current.MainPage = new HomeView();
@@ -122,11 +139,17 @@ public class LoginView : ContentPage
         }
     }
 
+    /// <summary>
+    /// Evento acionado ao clicar em Registrar
+    /// </summary>
     private void OnRegisterButtonClicked(object sender, EventArgs e)
     {
         Application.Current.MainPage = new RegisterView();
     }
 
+    /// <summary>
+    /// Exibe uma mensagem de erro na tela
+    /// </summary>
     private void DisplayError(string message)
     {
         ErrorLabel.Text = message;
