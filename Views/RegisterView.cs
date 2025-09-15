@@ -15,22 +15,79 @@ public class RegisterView : ContentPage
     public RegisterView()
     {
         Controller = new AuthController();
+        BackgroundColor = Color.FromArgb("#0D0D0D");
 
-        UsernameEntry = new Entry { Placeholder = "Usuário" };
-        EmailEntry = new Entry { Placeholder = "Email" };
-        PasswordEntry = new Entry { Placeholder = "Senha", IsPassword = true };
+        var logo = new Image
+        {
+            Source = "investyou.png",
+            HorizontalOptions = LayoutOptions.Center,
+            HeightRequest = 120
+        };
 
-        var registerButton = new Button { Text = "Registrar" };
-        var loginButton = new Button { Text = "Voltar para Login" };
-        ErrorLabel = new Label { TextColor = Colors.Red, IsVisible = false };
+        UsernameEntry = new Entry
+        {
+            Placeholder = "Usuário",
+            PlaceholderColor = Colors.Gray,
+            TextColor = Colors.White,
+            BackgroundColor = Color.FromArgb("#1E1E1E"),
+            Margin = new Thickness(0,5)
+        };
+
+        EmailEntry = new Entry
+        {
+            Placeholder = "Email",
+            PlaceholderColor = Colors.Gray,
+            TextColor = Colors.White,
+            BackgroundColor = Color.FromArgb("#1E1E1E"),
+            Margin = new Thickness(0,5)
+        };
+
+        PasswordEntry = new Entry
+        {
+            Placeholder = "Senha",
+            IsPassword = true,
+            PlaceholderColor = Colors.Gray,
+            TextColor = Colors.White,
+            BackgroundColor = Color.FromArgb("#1E1E1E"),
+            Margin = new Thickness(0,5)
+        };
+
+        var registerButton = new Button
+        {
+            Text = "Registrar",
+            BackgroundColor = Color.FromArgb("#FFCE00"),
+            TextColor = Colors.Black,
+            CornerRadius = 8
+        };
+
+        var loginButton = new Button
+        {
+            Text = "Voltar para Login",
+            BackgroundColor = Color.FromArgb("#1E1E1E"),
+            TextColor = Color.FromArgb("#FFCE00"),
+            CornerRadius = 8,
+            BorderColor = Color.FromArgb("#FFCE00"),
+            BorderWidth = 2
+        };
+
+        ErrorLabel = new Label
+        {
+            TextColor = Color.FromArgb("#F95555"),
+            IsVisible = false,
+            HorizontalOptions = LayoutOptions.Center
+        };
 
         registerButton.Clicked += OnRegisterButtonClickedAsync;
         loginButton.Clicked += OnLoginButtonClicked;
 
-        Content = new VerticalStackLayout
+        Content = new ScrollView
         {
-            Padding = 20,
-            Children = { UsernameEntry, EmailEntry, PasswordEntry, registerButton, loginButton, ErrorLabel }
+            Content = new VerticalStackLayout
+            {
+                Padding = 30,
+                Spacing = 15,
+                Children = { logo, UsernameEntry, EmailEntry, PasswordEntry, registerButton, loginButton, ErrorLabel }
+            }
         };
     }
 
@@ -46,7 +103,7 @@ public class RegisterView : ContentPage
 
         var user = new User
         {
-            Id = Guid.NewGuid().GetHashCode(), // pode substituir por outro ID único se desejar
+            Id = Guid.NewGuid().GetHashCode(),
             UserName = UsernameEntry.Text.Trim(),
             Email = EmailEntry.Text.Trim(),
             Password = PasswordEntry.Text

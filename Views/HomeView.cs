@@ -10,19 +10,59 @@ public class HomeView : ContentPage
     private readonly Slider TemperatureSlider;
     private readonly Entry MaxTokensEntry;
     private readonly HomeController Controller;
+    private readonly Label SuccessLabel;
 
     public HomeView()
     {
         Controller = new HomeController();
+        BackgroundColor = Color.FromArgb("#0D0D0D");
 
-        Title = "Home";
+        var logo = new Image
+        {
+            Source = "investyou.png",
+            HorizontalOptions = LayoutOptions.Center,
+            HeightRequest = 100
+        };
 
-        PromptEditor = new Editor { Placeholder = "Digite o prompt..." };
-        TemperatureSlider = new Slider(0, 1, 0.5);
-        MaxTokensEntry = new Entry { Keyboard = Keyboard.Numeric, Placeholder = "Max Tokens" };
+        PromptEditor = new Editor
+        {
+            Placeholder = "Digite o prompt...",
+            PlaceholderColor = Colors.Gray,
+            TextColor = Colors.White,
+            BackgroundColor = Color.FromArgb("#1E1E1E")
+        };
 
-        var saveButton = new Button { Text = "Salvar" };
+        TemperatureSlider = new Slider(0, 1, 0.5)
+        {
+            ThumbColor = Color.FromArgb("#FFCE00"),
+            MinimumTrackColor = Color.FromArgb("#FFCE00"),
+            MaximumTrackColor = Colors.Gray
+        };
+
+        MaxTokensEntry = new Entry
+        {
+            Placeholder = "Max Tokens",
+            Keyboard = Keyboard.Numeric,
+            PlaceholderColor = Colors.Gray,
+            TextColor = Colors.White,
+            BackgroundColor = Color.FromArgb("#1E1E1E")
+        };
+
+        var saveButton = new Button
+        {
+            Text = "Salvar",
+            BackgroundColor = Color.FromArgb("#FFCE00"),
+            TextColor = Colors.Black,
+            CornerRadius = 8
+        };
         saveButton.Clicked += OnSaveClickedAsync;
+
+        SuccessLabel = new Label
+        {
+            TextColor = Color.FromArgb("#0DFF00"),
+            IsVisible = false,
+            HorizontalOptions = LayoutOptions.Center
+        };
 
         Content = new ScrollView
         {
@@ -32,13 +72,15 @@ public class HomeView : ContentPage
                 Spacing = 15,
                 Children =
                 {
+                    logo,
                     new Label { Text = "Prompt:", TextColor = Colors.White },
                     PromptEditor,
                     new Label { Text = "Temperatura:", TextColor = Colors.White },
                     TemperatureSlider,
                     new Label { Text = "Max Tokens:", TextColor = Colors.White },
                     MaxTokensEntry,
-                    saveButton
+                    saveButton,
+                    SuccessLabel
                 }
             }
         };
@@ -47,7 +89,6 @@ public class HomeView : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-
         var data = await Controller.LoadAsync();
         PromptEditor.Text = data.Prompt;
         TemperatureSlider.Value = data.TextTemperature;
@@ -65,6 +106,7 @@ public class HomeView : ContentPage
 
         await Controller.SaveAsync(data);
 
-        await DisplayAlert("Sucesso", "Dados salvos no CSV!", "OK");
+        SuccessLabel.Text = "Dados salvos com sucesso!";
+        SuccessLabel.IsVisible = true;
     }
 }

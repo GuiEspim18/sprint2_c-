@@ -13,20 +13,70 @@ public class LoginView : ContentPage
     public LoginView()
     {
         Controller = new AuthController();
+        BackgroundColor = Color.FromArgb("#0D0D0D");
 
-        EmailEntry = new Entry { Placeholder = "Email" };
-        PasswordEntry = new Entry { Placeholder = "Senha", IsPassword = true };
-        var loginButton = new Button { Text = "Login" };
-        var registerButton = new Button { Text = "Registrar" };
-        ErrorLabel = new Label { TextColor = Colors.Red, IsVisible = false };
+        var logo = new Image
+        {
+            Source = "investyou.png",
+            HorizontalOptions = LayoutOptions.Center,
+            HeightRequest = 120
+        };
+
+        EmailEntry = new Entry
+        {
+            Placeholder = "Email",
+            PlaceholderColor = Colors.Gray,
+            TextColor = Colors.White,
+            BackgroundColor = Color.FromArgb("#1E1E1E"),
+            Margin = new Thickness(0,5)
+        };
+
+        PasswordEntry = new Entry
+        {
+            Placeholder = "Senha",
+            IsPassword = true,
+            PlaceholderColor = Colors.Gray,
+            TextColor = Colors.White,
+            BackgroundColor = Color.FromArgb("#1E1E1E"),
+            Margin = new Thickness(0,5)
+        };
+
+        var loginButton = new Button
+        {
+            Text = "Login",
+            BackgroundColor = Color.FromArgb("#FFCE00"),
+            TextColor = Colors.Black,
+            CornerRadius = 8
+        };
+
+        var registerButton = new Button
+        {
+            Text = "Registrar",
+            BackgroundColor = Color.FromArgb("#1E1E1E"),
+            TextColor = Color.FromArgb("#FFCE00"),
+            CornerRadius = 8,
+            BorderColor = Color.FromArgb("#FFCE00"),
+            BorderWidth = 2
+        };
+
+        ErrorLabel = new Label
+        {
+            TextColor = Color.FromArgb("#F95555"),
+            IsVisible = false,
+            HorizontalOptions = LayoutOptions.Center
+        };
 
         loginButton.Clicked += OnLoginButtonClickedAsync;
         registerButton.Clicked += OnRegisterButtonClicked;
 
-        Content = new VerticalStackLayout
+        Content = new ScrollView
         {
-            Padding = 20,
-            Children = { EmailEntry, PasswordEntry, loginButton, registerButton, ErrorLabel }
+            Content = new VerticalStackLayout
+            {
+                Padding = 30,
+                Spacing = 15,
+                Children = { logo, EmailEntry, PasswordEntry, loginButton, registerButton, ErrorLabel }
+            }
         };
     }
 
@@ -37,7 +87,6 @@ public class LoginView : ContentPage
 
         if (await Controller.LoginAsync(email, password))
         {
-            // Passa como callback a navegação
             Controller.OnLoginSuccess(() =>
             {
                 Application.Current.MainPage = new HomeView();
