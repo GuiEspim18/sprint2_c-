@@ -102,19 +102,7 @@ public class LoginView : ContentPage
         };
 
         // Impede redimensionamento da janela no Windows
-        #if WINDOWS
-        this.HandlerChanged += (s, e) =>
-        {
-            var window = this.Handler.PlatformView as Microsoft.UI.Xaml.Window;
-            if (window != null)
-            {
-                window.MinWidth = 500;
-                window.MinHeight = 600;
-                window.MaxWidth = 500;
-                window.MaxHeight = 600;
-            }
-        };
-        #endif
+ 
     }
 
     /// <summary>

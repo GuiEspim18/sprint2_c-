@@ -139,20 +139,6 @@ public class HomeView : ContentPage
             }
         };
 
-        // Impede redimensionamento da janela no Windows
-        #if WINDOWS
-        this.HandlerChanged += (s, e) =>
-        {
-            var window = this.Handler.PlatformView as Microsoft.UI.Xaml.Window;
-            if (window != null)
-            {
-                window.MinWidth = 600;
-                window.MinHeight = 600;
-                window.MaxWidth = 600;
-                window.MaxHeight = 800;
-            }
-        };
-        #endif
     }
 
     /// <summary>
