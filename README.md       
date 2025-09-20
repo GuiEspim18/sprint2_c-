@@ -1,0 +1,59 @@
+# 📱 InvestYOU
+
+Aplicativo em **.NET MAUI** para gerenciamento de usuários e configuração de dados de IA, com persistência em arquivos **JSON** locais.
+
+---
+
+## Funcionalidades
+
+- **Cadastro e login de usuários**  
+  - Usuários são armazenados em `users.json`.
+  - Login validado por `username` e `password`.
+
+- **Gerenciamento de configurações da IA**  
+  - Salva prompt, temperatura, max tokens e arquivos enviados.
+  - Dados persistidos em `iadata.json`.
+
+- **Tela Home preenchida automaticamente**  
+  - Ao fazer login, o app carrega as últimas configurações da IA.
+
+---
+
+## Extrutura
+
+InvestYOU/
+│── Models/
+│ ├── User.cs # Representa um usuário
+│ ├── IAData.cs # Configurações da IA
+│ ├── JsonHelper.cs # Persistência em JSON
+│
+│── Controllers/
+│ ├── AuthController.cs # Login e registro de usuários
+│ ├── HomeController.cs # Manipulação dos dados da IA
+│
+│── Views/
+│ ├── LoginView.xaml # Tela de login
+│ ├── HomeView.xaml # Tela inicial com dados carregados
+│
+│── App.xaml / App.xaml.cs
+│── MauiProgram.cs
+
+# Como funciona a persistência
+
+Os arquivos são salvos na pasta interna do app:
+
+- **Usuários** → `users.json`
+- **Configuração IA** → `iadata.json`
+
+Exemplo de `users.json`:
+
+```json
+[
+  {
+    "id": 1,
+    "userName": "guilherme",
+    "email": "gui@email.com",
+    "password": "1234"
+  }
+]
+

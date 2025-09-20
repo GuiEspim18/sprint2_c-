@@ -14,7 +14,7 @@ public class HomeController
     /// <returns>Objeto IAData com as informações atuais</returns>
     public async Task<IAData> LoadAsync()
     {
-        return await CsvHelper.LoadIADataAsync() ?? new IAData();
+        return await JsonHelper.LoadIADataAsync() ?? new IAData();
     }
 
     /// <summary>
@@ -23,7 +23,7 @@ public class HomeController
     /// <param name="data">Objeto IAData com os dados a serem salvos</param>
     public async Task SaveAsync(IAData data)
     {
-        await CsvHelper.SaveIADataAsync(data);
+        await JsonHelper.SaveIADataAsync(data);
     }
 
     /// <summary>

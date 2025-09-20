@@ -16,7 +16,7 @@ public class AuthController
     /// <returns>True se login for válido, false caso contrário</returns>
     public async Task<bool> LoginAsync(string email, string password)
     {
-        var users = await CsvHelper.LoadUsersAsync();
+        var users = await JsonHelper.LoadUsersAsync();
         return users.Any(u => u.Email == email && u.Password == password);
     }
 
@@ -26,7 +26,7 @@ public class AuthController
     /// <param name="user">Objeto User contendo os dados do usuário</param>
     public async Task RegisterAsync(User user)
     {
-        await CsvHelper.SaveUserAsync(user);
+        await JsonHelper.SaveUserAsync(user);
     }
 
     /// <summary>
